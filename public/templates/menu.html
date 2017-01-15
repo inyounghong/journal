@@ -1,1 +1,18 @@
-{{ entries.length }}
+
+<div id="calendar">
+    <div class="month">{{calendar.selectedMonth}}</div>
+    <div class="week" ng-repeat="week in calendar.weeks">
+        <span class="day"
+            ng-class="{ today: day.isToday, 'different-month': !day.isCurrentMonth, 'selected': isSelected(day.date)}"
+            ng-click="selectDate(day.date)"
+            ng-repeat="day in week">
+            {{day.number}}
+        </span>
+    </div>
+    <div class="day-string">
+        <!-- {{calendar.selectedDay.name}} -->
+    </div>
+</div>
+
+
+<!-- "{ today: day.isToday, 'different-month': !day.isCurrentMonth, selected: day.date.isSame(selected) } -->

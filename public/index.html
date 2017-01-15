@@ -23,8 +23,10 @@
 	<!-- SPELLS -->
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script><!-- load angular -->
 
+	<script src="js/calendar.js"></script>
 	<script src="js/controllers/main.js"></script> <!-- load up our controller -->
 	<script src="js/services/entries.js"></script> <!-- load our entry service -->
+
 	<script src="js/core.js"></script> <!-- load our main application -->
 
 </head>
@@ -35,11 +37,14 @@
 		<div class="row">
 
 			<!-- Menu -->
-			<div class="col-sm-3">
+			<div id="menu">
 				<ng-include src="'../templates/menu.html'"></ng-include>
 			</div>
 
-			<div class="col-sm-9">
+			<div class="col-sm-9 col-sm-offset-3">
+
+				<h1>{{formatDateJS(calendar.selectedDate)}}</h1>
+
 				<!-- Entry display -->
 				<ng-include src="'../templates/entryDisplay.html'"></ng-include>
 

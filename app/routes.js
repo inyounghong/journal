@@ -12,14 +12,12 @@ function getEntries(res) {
     });
 };
 
-function getDate() {
-    var today = new Date();
-    return {
-        day: today.getDate(),
-        month: today.getMonth() + 1,
-        year: today.getFullYear()
-    }
+function getEntriesByDate(res, dateDB) {
+    Entry.find({"date.day" : dateDB}, function (err, docs) {
+        res.json(docs);
+    });
 }
+
 
 module.exports = function (app) {
 
@@ -27,27 +25,52 @@ module.exports = function (app) {
     // get all entries
     app.get('/api/entries', function (req, res) {
         // use mongoose to get all entries in the database
-        getEntries(res);
+        // getEntries(res);
+
+        Entry.find({}, function (err, docs) {
+            res.json(docs);
+        });
+    });
+
+    app.get('/api/entries/:date', function (req, res) {
+        // getEntriesByDate(res, req.params.date);
+        Entry.find({"date.day" : req.params.date}, function (err, docs) {
+            res.json(docs);
+        });
     });
 
     // create entry and send back all entries after creation
     app.post('/api/entries', function (req, res) {
-        console.log(req.body);
-
         // create a entry, information comes from AJAX request from Angular
         Entry.create({
             text: req.body.text,
             type: req.body.type,
-            date: getDate(),
-            done: false
+            date: req.body.dateDB
         }, function (err, entry) {
             if (err)
                 res.send(err);
 
             // get and return all the entries after you create another
-            getEntries(res);
+            getEntriesByDate(req.body.dateDB);
         });
 
+    });
+
+    app.post('/api/entries/:entry_id', function(req, res) {
+        Entry.findByIdAndUpdate(req.params.entry_id,
+            {
+            $set: {
+                    text: req.body.text,
+                    type: req.body.type
+                }
+            },
+            { new: true },
+            function (err, entry) {
+                if (err)
+                    res.send(entry);
+
+                getEntries(res);
+        });
     });
 
     // delete a entry

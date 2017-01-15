@@ -1,10 +1,29 @@
 $green: #dcedc1
 $orange: #ffd3b6
-$red: #ff8b94
+$red: #ffc7cc
+
+$font-light: #aaa
+$font-normal: #555
+
+$small: 12px
+
+*
+    color: $font-normal
+
+// Entries
+
+#entries
+    margin-top: 30px
+
+.hide-block
+    display: none
 
 .entry-wrap
     padding: 20px
     margin: 10px
+
+    &:hover .edit-menu
+        display: block
 
     &.type-0
         background: $green
@@ -12,3 +31,61 @@ $red: #ff8b94
         background: $orange
     &.type-2
         background: $red
+
+    .edit-menu
+
+        position: absolute
+        right: 0
+        background: white
+
+        .delete
+            display: inline-block
+
+
+        &:hover .hide-block
+            display: block
+
+// Menu
+
+#menu
+    position: fixed
+    top: 80px
+    left: 50px
+
+// Calendar
+
+#calendar
+    .month
+        background: $red
+        color: white
+        text-align: center
+        padding: 5px 10px
+        margin-bottom: 5px
+        border-radius: 10px
+        font-weight: bold
+        max-width: 180px
+
+    .day
+        display: inline-block
+        text-align: center
+        width: 27px
+        padding: 5px 5px
+        margin: 1px
+        box-sizing:border-box
+        border-radius: 100%
+        font-size: $small
+
+        &.different-month
+            color: $font-light
+
+        &.today
+            font-weight: bold
+
+        &:hover
+            background: #eee
+            cursor: pointer
+        &.selected
+            background: $red
+            color: white
+            &:hover
+                background: $red

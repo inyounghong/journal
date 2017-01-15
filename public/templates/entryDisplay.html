@@ -1,17 +1,31 @@
 <!-- LOOP OVER THE ENTRYS IN $scope.entries -->
-<div class="entry-wrap type-{{entry.type}}" ng-repeat="entry in entries">
+<div id="entries">
+    <div class="entry-wrap type-{{entry.type}}" ng-repeat="entry in entries">
 
-    <input type="checkbox" ng-click="deleteEntry(entry._id)">
-    <div class="text">
-        {{ entry.text }}
-    </div>
-    <div class="date">
-        date
-        {{ formatDate(entry.date) }}
+        <div class="edit-menu hide-block">
+            Edit
+            <div class="hide-block">
+                <select
+                    ng-model="entry.type"
+                    ng-change="updateEntry(entry)"
+                    ng-options="type.value as type.name for type in entryTypeOptions">
+                </select>
+                <br>
+                <div class="delete" ng-click="deleteEntry(entry._id)">Delete</div>
+            </div>
+        </div>
+
+        <div class="text">
+            {{ entry.text }}
+        </div>
+        <!-- <div class="date">
+            date
+            {{ formatDate(entry.date) }}
+        </div> -->
+
     </div>
 
+    <p class="text-center" ng-show="loading">
+        <span class="fa fa-spinner fa-spin fa-3x"></span>
+    </p>
 </div>
-
-<p class="text-center" ng-show="loading">
-    <span class="fa fa-spinner fa-spin fa-3x"></span>
-</p>
