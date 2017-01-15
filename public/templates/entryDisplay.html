@@ -1,0 +1,17 @@
+<!-- LOOP OVER THE ENTRYS IN $scope.entries -->
+<div class="entry-wrap type-{{entry.type}}" ng-repeat="entry in entries">
+
+    <input type="checkbox" ng-click="deleteEntry(entry._id)">
+    <div class="text">
+        {{ entry.text }}
+    </div>
+    <div class="date">
+        date
+        {{ formatDate(entry.date) }}
+    </div>
+
+</div>
+
+<p class="text-center" ng-show="loading">
+    <span class="fa fa-spinner fa-spin fa-3x"></span>
+</p>

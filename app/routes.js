@@ -1,52 +1,64 @@
-var Todo = require('./models/todo');
+var Entry = require('./models/entry');
 
-function getTodos(res) {
-    Todo.find(function (err, todos) {
+function getEntries(res) {
+    Entry.find(function (err, entries) {
 
         // if there is an error retrieving, send the error. nothing after res.send(err) will execute
         if (err) {
             res.send(err);
         }
 
-        res.json(todos); // return all todos in JSON format
+        res.json(entries); // return all entries in JSON format
     });
 };
+
+function getDate() {
+    var today = new Date();
+    return {
+        day: today.getDate(),
+        month: today.getMonth() + 1,
+        year: today.getFullYear()
+    }
+}
 
 module.exports = function (app) {
 
     // api ---------------------------------------------------------------------
-    // get all todos
-    app.get('/api/todos', function (req, res) {
-        // use mongoose to get all todos in the database
-        getTodos(res);
+    // get all entries
+    app.get('/api/entries', function (req, res) {
+        // use mongoose to get all entries in the database
+        getEntries(res);
     });
 
-    // create todo and send back all todos after creation
-    app.post('/api/todos', function (req, res) {
+    // create entry and send back all entries after creation
+    app.post('/api/entries', function (req, res) {
+        console.log(req.body);
 
-        // create a todo, information comes from AJAX request from Angular
-        Todo.create({
+        // create a entry, information comes from AJAX request from Angular
+        Entry.create({
             text: req.body.text,
+            type: req.body.type,
+            date: getDate(),
             done: false
-        }, function (err, todo) {
+        }, function (err, entry) {
             if (err)
                 res.send(err);
 
-            // get and return all the todos after you create another
-            getTodos(res);
+            // get and return all the entries after you create another
+            getEntries(res);
         });
 
     });
 
-    // delete a todo
-    app.delete('/api/todos/:todo_id', function (req, res) {
-        Todo.remove({
-            _id: req.params.todo_id
-        }, function (err, todo) {
+    // delete a entry
+    app.delete('/api/entries/:entry_id', function (req, res) {
+        Entry.remove({
+            _id: req.params.entry_id
+        }, function (err, entry) {
             if (err)
                 res.send(err);
 
-            getTodos(res);
+            getEntries(res);
         });
     });
 

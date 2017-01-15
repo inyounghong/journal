@@ -7,6 +7,8 @@ var database = require('./config/database'); 			// load the database config
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
+var sass    = require('node-sass'), // We're adding the node-sass module
+    path    = require('path');      // Also loading the path module
 
 // configuration ===============================================================
 mongoose.connect(database.localUrl); 	// Connect to local MongoDB instance. A remoteUrl is also available (modulus.io)

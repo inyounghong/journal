@@ -1,0 +1,21 @@
+<div id="entry-form" class="row">
+    <div class="col-sm-8">
+        <form>
+            <div class="form-group">
+                <textarea
+                    class="form-control"
+                    placeholder="Entry"
+                    ng-model="formData.text">
+                </textarea>
+
+                <select
+                    ng-model="formData.type"
+                    ng-options="type.value as type.name for type in entryTypeOptions">
+                </select>
+            </div>
+
+            <!-- createEntry() WILL CREATE NEW ENTRYS -->
+            <button type="submit" class="btn btn-primary btn-lg" ng-click="createEntry()">Add</button>
+        </form>
+    </div>
+</div>
